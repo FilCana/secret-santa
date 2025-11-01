@@ -25,7 +25,12 @@ let namesList = ["Filippo", "Larissa", "Noemi", "Romana"];
 app.post("/send-email", async (req, res) => {
   const { to, chooser } = req.body;
 
+  console.log("Incoming request:", req.body);
+  console.log("Current namesList:", namesList);
+
+
   const possibleNames = namesList.filter(name => name !== chooser);
+  console.log("possibleNames after filter:", possibleNames);
 
   if (possibleNames.length === 0) {
     return res.status(400).json({
