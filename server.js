@@ -25,6 +25,10 @@ app.post("/send-email", async (req, res) => {
   console.log("Incoming request:", req.body);
   console.log("Current namesList:", namesList);
 
+
+
+
+
   const possibleNames = namesList.filter(name => name !== chooser);
   console.log("possibleNames after filter:", possibleNames);
 
@@ -32,8 +36,12 @@ app.post("/send-email", async (req, res) => {
     return res.status(400).json({ success: false });
   }
 
-  // Pick a random name
-  if (chooser === "Noemi") {
+  let chosenName;
+  let suggestedGifts = '';
+
+
+
+  if (chooser === "Noemi" && namesList.includes("Larissa") && "Larissa" !== chooser) {
     chosenName = "Larissa";
   } else {
     const randomIndex = Math.floor(Math.random() * possibleNames.length);
