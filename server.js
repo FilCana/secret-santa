@@ -35,6 +35,17 @@ app.post("/send-email", async (req, res) => {
   // Pick a random name
   const randomIndex = Math.floor(Math.random() * possibleNames.length);
   const chosenName = possibleNames[randomIndex];
+  let suggestedGifts;
+
+  if (chosenName == "Larissa") {
+    suggestedGifts = ' - Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56). \n - "L\'ultimo segreto" di Dan Brown.';
+  } else if (chosenName == "Romana") {
+    suggestedGifts = ' - RevitaLash Advanced Eyelash Conditioner. \n - Gioiello Swarowksi o Pandora. \n - Reggiseno sportivo taglia S meno sintetico possibile.';
+  } else if (chosenName == "Noemi") {
+    suggestedGifts = ' - Un foulard dai colori autunalli (non viola).';
+  } else if (chosenName == "Filippo") {
+    suggestedGifts = ' - Sedia ergonomica.';
+  }
 
   // Remove the chosen name from the list
   namesList = namesList.filter(name => name !== chosenName);
@@ -44,7 +55,7 @@ app.post("/send-email", async (req, res) => {
       to,
       from: "canavesi.secret.santa@gmail.com", // Verified sender in SendGrid
       subject: "🎅 Scopri il nome!",
-      text: `Dovrai fare un pensiero a ${chosenName}!`,
+      text: `Dovrai fare un pensiero a ${chosenName}! \n\n Ecco la sua lista dei desideri: \n ${suggestedGifts}\n\n Buon natale e tanti salutoni. `,
     };
 
     await sgMail.send(msg);
