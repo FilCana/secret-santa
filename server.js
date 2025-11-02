@@ -1,3 +1,24 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const app = express();
+
+app.use(cors({
+  origin: "https://filippocanavesi.site",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+app.use(express.json());
+
+
+let namesList = ["Filippo", "Larissa", "Noemi", "Romana"];
+
 app.post("/send-email", async (req, res) => {
   const { to, chooser } = req.body;
 
@@ -11,64 +32,59 @@ app.post("/send-email", async (req, res) => {
     return res.status(400).json({ success: false });
   }
 
-  // declare variables
-  let chosenName;
-  let suggestedGifts = '';
+  // Pick a random name
+  const randomIndex = Math.floor(Math.random() * possibleNames.length);
+  const chosenName = possibleNames[randomIndex];
+  let suggestedGifts;
 
-  // Pick a random name, but force Larissa if chooser is Noemi (only if Larissa is available)
-  if (chooser === "Noemi" && namesList.includes("Larissa") && "Larissa" !== chooser) {
-    chosenName = "Larissa";
-  } else {
-    const randomIndex = Math.floor(Math.random() * possibleNames.length);
-    chosenName = possibleNames[randomIndex];
-  }
-
-  // Build suggestedGifts based on chosenName
-  if (chosenName === "Larissa") {
+  if (chosenName == "Larissa") {
     suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56)\n"L\'ultimo segreto" di Dan Brown';
-  } else if (chosenName === "Romana") {
+  } else if (chosenName == "Romana") {
     suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile';
-  } else if (chosenName === "Noemi") {
-    suggestedGifts = 'Un foulard dai colori autunnali (non viola)';
-  } else if (chosenName === "Filippo") {
-    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl';
+  } else if (chosenName == "Noemi") {
+    suggestedGifts = 'Un foulard dai colori autunalli (non viola)';
+  } else if (chosenName == "Filippo") {
+    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl\n';
   }
 
-  // Remove the chosen name from the list (if present)
+  // Remove the chosen name from the list
   namesList = namesList.filter(name => name !== chosenName);
 
-  try {
-    const msg = {
-      to,
-      from: "canavesi.secret.santa@gmail.com", // Verified sender
-      subject: "🎅 Scopri il nome!",
-      text: `Dovrai fare un pensiero a ${chosenName}!\n\nEcco la sua lista dei desideri:\n${suggestedGifts}\n\nBuon Natale e tanti salutoni.`,
-      html: `
-        <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
-          <h2 style="color: #b30000;">🎅 Secret Santa 2025! </h2>
-          <p>Ciao! 🎄</p>
-          <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
-          <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
-          <ul>
-            ${suggestedGifts.split('\n').map(gift => `<li>${gift}</li>`).join('')}
-          </ul>
-          <p>Buon Natale e tanti salutoni! 🎁</p>
-          <div style="text-align:center; margin-top: 20px;">
-            <img 
-              src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aWE5YnozOXpweXliMXN3YXdjY2N6MW02b2JmcXBxYWtuMzZmZGZzdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/DQiEpKtt4ytM8tFd5H/giphy.gif" 
-              alt="" 
-              style="max-width:100%; border-radius:10px;"
-            />
-          </div>
+try {
+  const msg = {
+    to,
+    from: "canavesi.secret.santa@gmail.com", // Verified sender
+    subject: "🎅 Scopri il nome!",
+    text: `Dovrai fare un pensiero a ${chosenName}!\n\nEcco la sua lista dei desideri:\n${suggestedGifts}\n\nBuon Natale e tanti salutoni.`,
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
+        <h2 style="color: #b30000;">🎅 Secret Santa 2025! </h1>
+        <p>Ciao! 🎄</p>
+        <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
+        <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
+        <ul>
+          ${suggestedGifts.split('\n').map(gift => `<li>${gift}</li>`).join('')}
+        </ul>
+        <p>Buon Natale e tanti salutoni! 🎁</p>
+        <div style="text-align:center; margin-top: 20px;">
+          <img 
+            src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aWE5YnozOXpweXliMXN3YXdjY2N6MW02b2JmcXBxYWtuMzZmZGZzdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/DQiEpKtt4ytM8tFd5H/giphy.gif" 
+            alt="" 
+            style="max-width:100%; border-radius:10px;"
+          />
         </div>
-      `,
-    };
+      </div>
+    `,
+  };
 
-    await sgMail.send(msg);
+  await sgMail.send(msg);
+
     res.json({ success: true });
   } catch (error) {
     console.error("Errore nell'invio:", error);
-    if (error.response) console.error(error.response.body);
     res.status(500).json({ success: false, message: "❌ Impossibile inviare l'email" });
   }
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
