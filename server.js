@@ -38,13 +38,13 @@ app.post("/send-email", async (req, res) => {
   let suggestedGifts;
 
   if (chosenName == "Larissa") {
-    suggestedGifts = ' - Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56). \n - "L\'ultimo segreto" di Dan Brown.';
+    suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56).\n"L\'ultimo segreto" di Dan Brown.';
   } else if (chosenName == "Romana") {
-    suggestedGifts = ' - RevitaLash Advanced Eyelash Conditioner. \n - Gioiello Swarowksi o Pandora. \n - Reggiseno sportivo taglia S meno sintetico possibile.';
+    suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner.\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile.';
   } else if (chosenName == "Noemi") {
-    suggestedGifts = ' - Un foulard dai colori autunalli (non viola).';
+    suggestedGifts = 'Un foulard dai colori autunalli (non viola).';
   } else if (chosenName == "Filippo") {
-    suggestedGifts = ' - Sedia ergonomica.';
+    suggestedGifts = 'Sedia ergonomica.';
   }
 
   // Remove the chosen name from the list
@@ -58,7 +58,7 @@ try {
     text: `Dovrai fare un pensiero a ${chosenName}!\n\nEcco la sua lista dei desideri:\n${suggestedGifts}\n\nBuon Natale e tanti salutoni.`,
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
-        <h1 style="color: #b30000;">🎅 Secret Santa!</h1>
+        <h2 style="color: #b30000;">🎅 Secret Santa! 🎅</h1>
         <p>Ciao! 🎄</p>
         <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
         <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
@@ -68,8 +68,8 @@ try {
         <p>Buon Natale e tanti salutoni! 🎁</p>
         <div style="text-align:center; margin-top: 20px;">
           <img 
-            src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2E0dWNqZmxiN3Z1ajh2dGl3NHpydmIwazJ5c3I0NHFsbmF0Y245YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QpfqKHA1fUXDi/giphy.gif" 
-            alt="Gift animation" 
+            src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aWE5YnozOXpweXliMXN3YXdjY2N6MW02b2JmcXBxYWtuMzZmZGZzdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/DQiEpKtt4ytM8tFd5H/giphy.gif" 
+            alt="" 
             style="max-width:100%; border-radius:10px;"
           />
         </div>
