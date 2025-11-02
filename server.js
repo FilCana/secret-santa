@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 
 app.use(cors({
-  origin: "https://filippocanavesi.site",
+  origin: "http://filippocanavesi.site",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
@@ -69,3 +69,4 @@ app.post("/send-email", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
