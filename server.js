@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 
 app.use(cors({
-  origin: "http://filippocanavesi.site",
+  origin: "https://filippocanavesi.site",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
