@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 
 app.use(cors({
-  origin: "https://filippocanavesi.site",
+  origin: "http://filippocanavesi.site",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
@@ -50,15 +50,34 @@ app.post("/send-email", async (req, res) => {
   // Remove the chosen name from the list
   namesList = namesList.filter(name => name !== chosenName);
 
-  try {
-    const msg = {
-      to,
-      from: "canavesi.secret.santa@gmail.com", // Verified sender in SendGrid
-      subject: "🎅 Scopri il nome!",
-      text: `Dovrai fare un pensiero a ${chosenName}! \n\n Ecco la sua lista dei desideri: \n ${suggestedGifts}\n\n Buon natale e tanti salutoni. `,
-    };
+try {
+  const msg = {
+    to,
+    from: "canavesi.secret.santa@gmail.com", // Verified sender
+    subject: "🎅 Scopri il nome!",
+    text: `Dovrai fare un pensiero a ${chosenName}!\n\nEcco la sua lista dei desideri:\n${suggestedGifts}\n\nBuon Natale e tanti salutoni.`,
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
+        <h1 style="color: #b30000;">🎅 Secret Santa!</h1>
+        <p>Ciao! 🎄</p>
+        <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
+        <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
+        <ul>
+          ${suggestedGifts.split('\n').map(gift => `<li>${gift}</li>`).join('')}
+        </ul>
+        <p>Buon Natale e tanti salutoni! 🎁</p>
+        <div style="text-align:center; margin-top: 20px;">
+          <img 
+            src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2E0dWNqZmxiN3Z1ajh2dGl3NHpydmIwazJ5c3I0NHFsbmF0Y245YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QpfqKHA1fUXDi/giphy.gif" 
+            alt="Gift animation" 
+            style="max-width:100%; border-radius:10px;"
+          />
+        </div>
+      </div>
+    `,
+  };
 
-    await sgMail.send(msg);
+  await sgMail.send(msg);
 
     res.json({ success: true });
   } catch (error) {
@@ -69,5 +88,3 @@ app.post("/send-email", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-
