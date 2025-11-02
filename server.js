@@ -58,7 +58,7 @@ try {
     text: `Dovrai fare un pensiero a ${chosenName}!\n\nEcco la sua lista dei desideri:\n${suggestedGifts}\n\nBuon Natale e tanti salutoni.`,
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
-        <h2 style="color: #b30000;">🎅 Secret Santa! 🎅</h1>
+        <h2 style="color: #b30000;">🎅 Secret Santa 2025! </h1>
         <p>Ciao! 🎄</p>
         <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
         <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
