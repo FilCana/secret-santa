@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json());
 
 
-let namesList = ["Filippo", "Larissa", "Noemi", "Romana"];
+let namesList = ["Larissa", "Noemi"];
 
 app.post("/send-email", async (req, res) => {
   const { to, chooser } = req.body;
@@ -35,17 +35,17 @@ app.post("/send-email", async (req, res) => {
   // Pick a random name
   const randomIndex = Math.floor(Math.random() * possibleNames.length);
   const chosenName = possibleNames[randomIndex];
-  let suggestedGifts;
+  let suggestedGifts  = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56)\n"L\'ultimo segreto" di Dan Brown';;
 
-  if (chosenName == "Larissa") {
-    suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56)\n"L\'ultimo segreto" di Dan Brown';
-  } else if (chosenName == "Romana") {
-    suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile';
-  } else if (chosenName == "Noemi") {
-    suggestedGifts = 'Un foulard dai colori autunalli (non viola)';
-  } else if (chosenName == "Filippo") {
-    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl';
-  }
+  // if (chosenName == "Larissa") {
+  //   suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56)\n"L\'ultimo segreto" di Dan Brown';
+  // } else if (chosenName == "Romana") {
+  //   suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile';
+  // } else if (chosenName == "Noemi") {
+  //   suggestedGifts = 'Un foulard dai colori autunalli (non viola)';
+  // } else if (chosenName == "Filippo") {
+  //   suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl';
+  // }
 
   // Remove the chosen name from the list
   namesList = namesList.filter(name => name !== chosenName);
@@ -60,7 +60,7 @@ try {
       <div style="font-family: Arial, sans-serif; color: #333; background: #fff3e6; padding: 20px; border-radius: 10px;">
         <h2 style="color: #b30000;">🎅 Secret Santa 2025! </h1>
         <p>Ciao! 🎄</p>
-        <p>Dovrai fare un pensiero a <strong style="color: #800000;">${chosenName}</strong>!</p>
+        <p>Dovrai fare un pensiero a <strong style="color: #800000;">Larissa</strong>!</p>
         <p>Ecco la sua <strong>lista dei desideri</strong>:</p>
         <ul>
           ${suggestedGifts.split('\n').map(gift => `<li>${gift}</li>`).join('')}
