@@ -44,7 +44,7 @@ app.post("/send-email", async (req, res) => {
   } else if (chosenName == "Noemi") {
     suggestedGifts = 'Un foulard dai colori autunalli (non viola)';
   } else if (chosenName == "Filippo") {
-    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl\n';
+    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl';
   }
 
   // Remove the chosen name from the list
