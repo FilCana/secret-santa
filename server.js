@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 
 app.use(cors({
-  origin: "http://filippocanavesi.site",
+  origin: "https://filippocanavesi.site",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
@@ -38,13 +38,13 @@ app.post("/send-email", async (req, res) => {
   let suggestedGifts;
 
   if (chosenName == "Larissa") {
-    suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56).\n"L\'ultimo segreto" di Dan Brown.';
+    suggestedGifts = 'Gioiello Pandora, preferibilmente braccialetti semplici, orecchini o anelli (misura 56)\n"L\'ultimo segreto" di Dan Brown';
   } else if (chosenName == "Romana") {
-    suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner.\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile.';
+    suggestedGifts = 'RevitaLash Advanced Eyelash Conditioner\nGioiello Swarowksi o Pandora.\nReggiseno sportivo taglia S meno sintetico possibile';
   } else if (chosenName == "Noemi") {
-    suggestedGifts = 'Un foulard dai colori autunalli (non viola).';
+    suggestedGifts = 'Un foulard dai colori autunalli (non viola)';
   } else if (chosenName == "Filippo") {
-    suggestedGifts = 'Sedia ergonomica.';
+    suggestedGifts = 'Carta regalo Amazon\nCarta regalo Lidl\n';
   }
 
   // Remove the chosen name from the list
